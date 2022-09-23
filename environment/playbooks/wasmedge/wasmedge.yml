@@ -1,0 +1,27 @@
+---
+- hosts: pis
+  become: true
+  tasks:
+  - name: Disable auto-update # can cause problems aquiring the lock for apt
+    copy:
+      dest: /etc/apt/apt.conf.d/20auto-upgrades
+      content: |
+        APT::Periodic::Update-Package-Lists "0";
+        APT::Periodic::Download-Upgradeable-Packages "0";
+        APT::Periodic::AutocleanInterval "0";
+        APT::Periodic::Unattended-Upgrade "0";
+
+  # follows https://wasmedge.org/book/en/quick_start/install.html
+  - name: Ensure prerequisite - git
+    apt:
+      name: git
+      update_cache: yes
+      state: present
+      
+  - name: Ensure prerequisite - curl
+    apt:
+      name: curl
+      state: present
+
+  - name: Install wasmedge # the dirty way: not really idempotent :/
+    shell: 'curl -sSf https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/install.sh | bash -s -- -p /usr/local'
