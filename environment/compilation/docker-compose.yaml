@@ -1,0 +1,13 @@
+# see https://blog.giovannidemizio.eu/2021/05/24/how-to-set-user-and-group-in-docker-compose/
+# Docker will run as root and fuck-up all the generated files
+# use solution 1:
+# env UID=${UID} GID=${GID} docker-compose run c (or something different)
+services:
+  c:
+    image: emscripten/emsdk:3.1.23
+    user: "${UID}:${GID}"
+    volumes:
+      - .:/src
+    command: bash -c 'for f in /src/*.c; do emcc $$f -o "$${f%.*}.wasm"; done'
+  
+  
