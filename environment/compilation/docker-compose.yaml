@@ -15,9 +15,9 @@ services:
       context: ./javascript
     container_name: greenlab-javascript
     volumes: 
-      - ./wasm:/var/green-lab/compilation/javascript
+      - ./wasm/javascript:/var/green-lab
     environment:
       - GREENLAB_BENCHMARK_JS_REPO=${GREENLAB_BENCHMARK_JS_REPO}
       - GREENLAB_BENCHMARK_JS_HASH=${GREENLAB_BENCHMARK_JS_HASH}
       - GREENLAB_BENCHMARK_JS_URL=${GREENLAB_BENCHMARK_JS_URL}
-      - GREENLAB_BENCHMARK_JS_VOLUME=/var/green-lab/compilation/javascript
+      - GREENLAB_BENCHMARK_JS_URL=/var/green-lab
