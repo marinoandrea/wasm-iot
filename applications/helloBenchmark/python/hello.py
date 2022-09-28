@@ -1,6 +1,3 @@
-from ast import main
-
-
 def main():
     print("Hello from Python!")
 
