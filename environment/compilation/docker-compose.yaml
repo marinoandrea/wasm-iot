@@ -10,4 +10,14 @@ services:
       - .:/src
     command: bash -c 'for f in /src/*.c; do emcc $$f -o "$${f%.*}.wasm"; done'
   
-  
+  javascript:
+    build:
+      context: ./javascript
+    container_name: greenlab-javascript
+    volumes: 
+      - ./wasm:/var/green-lab/compilation/javascript
+    environment:
+      - GREENLAB_BENCHMARK_JS_REPO=${GREENLAB_BENCHMARK_JS_REPO}
+      - GREENLAB_BENCHMARK_JS_HASH=${GREENLAB_BENCHMARK_JS_HASH}
+      - GREENLAB_BENCHMARK_JS_URL=${GREENLAB_BENCHMARK_JS_URL}
+      - GREENLAB_BENCHMARK_JS_VOLUME=/var/green-lab/compilation/javascript

@@ -2,4 +2,6 @@ function main() {
   console.log("Hello from JavaScript!");
 }
 
-main();
+// NOTE: this allows the `javy` compiler to access the `main` function, see:
+// https://github.com/Shopify/javy
+Shopify = { main };
