@@ -13,11 +13,22 @@ services:
     volumes:
       - .:/src # TODO: takes pwd
     command: bash -c 'for f in /src/*.c; do emcc $$f -o "$${f%.*}.wasm"; done'
-  
+
   rust:
     build: .
     user: "${UID}:${GID}"
     volumes:
       - ../../applications:/src # TODO: takes pwd
     command: bash -c 'for d in /src/*/ ; do cd $$d; cd rust; cargo build --target wasm32-wasi; done'
-    
+
+  javascript:
+    build:
+      context: ./javascript
+    container_name: greenlab-javascript
+    volumes: 
+      - ./wasm/javascript:/var/green-lab
+    environment:
+      - GREENLAB_BENCHMARK_JS_REPO=${GREENLAB_BENCHMARK_JS_REPO}
+      - GREENLAB_BENCHMARK_JS_HASH=${GREENLAB_BENCHMARK_JS_HASH}
+      - GREENLAB_BENCHMARK_JS_URL=${GREENLAB_BENCHMARK_JS_URL}
+      - GREENLAB_BENCHMARK_JS_URL=/var/green-lab
