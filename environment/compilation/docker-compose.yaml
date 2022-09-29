@@ -2,12 +2,22 @@
 # Docker will run as root and fuck-up all the generated files
 # use solution 1:
 # env UID=${UID} GID=${GID} docker-compose run c (or something different)
+
+# To get interactive shells in docker-compose add the next to line to a service:
+  #stdin_open: true # docker run -i
+  #tty: true        # docker run -t
 services:
   c:
     image: emscripten/emsdk:3.1.23
     user: "${UID}:${GID}"
     volumes:
-      - .:/src
+      - .:/src # TODO: takes pwd
     command: bash -c 'for f in /src/*.c; do emcc $$f -o "$${f%.*}.wasm"; done'
   
-  
+  rust:
+    build: .
+    user: "${UID}:${GID}"
+    volumes:
+      - ../../applications:/src # TODO: takes pwd
+    command: bash -c 'for d in /src/*/ ; do cd $$d; cd rust; cargo build --target wasm32-wasi; done'
+    
