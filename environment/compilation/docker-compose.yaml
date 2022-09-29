@@ -15,7 +15,8 @@ services:
     command: bash -c 'for f in /src/*.c; do emcc $$f -o "$${f%.*}.wasm"; done'
 
   rust:
-    build: .
+    build:
+      context: ./rust
     user: "${UID}:${GID}"
     volumes:
       - ../../applications:/src # TODO: takes pwd
