@@ -32,4 +32,16 @@ services:
       - GREENLAB_BENCHMARK_JS_REPO=${GREENLAB_BENCHMARK_JS_REPO}
       - GREENLAB_BENCHMARK_JS_HASH=${GREENLAB_BENCHMARK_JS_HASH}
       - GREENLAB_BENCHMARK_JS_URL=${GREENLAB_BENCHMARK_JS_URL}
-      - GREENLAB_BENCHMARK_JS_URL=/var/green-lab
+      - GREENLAB_BENCHMARK_JS_VOLUME=/var/green-lab
+
+  go:
+    build:
+      context: ./go
+    container_name: greenlab-go
+    volumes: 
+      - ./wasm/go:/var/green-lab
+    environment:
+      - GREENLAB_BENCHMARK_GO_REPO=${GREENLAB_BENCHMARK_GO_REPO}
+      - GREENLAB_BENCHMARK_GO_HASH=${GREENLAB_BENCHMARK_GO_HASH}
+      - GREENLAB_BENCHMARK_GO_ROOT_URL=${GREENLAB_BENCHMARK_GO_ROOT_URL}
+      - GREENLAB_BENCHMARK_GO_VOLUME=/var/green-lab
