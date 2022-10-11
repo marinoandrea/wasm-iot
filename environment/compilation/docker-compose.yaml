@@ -8,19 +8,28 @@
   #tty: true        # docker run -t
 services:
   c:
-    image: emscripten/emsdk:3.1.23
-    user: "${UID}:${GID}"
+    build:
+      context: ./c
+    container_name: greenlab-c
     volumes:
-      - .:/src # TODO: takes pwd
-    command: bash -c 'for f in /src/*.c; do emcc $$f -o "$${f%.*}.wasm"; done'
+      - ./wasm/c:/var/green-lab
+    environment:
+      - GREENLAB_BENCHMARK_C_REPO=${GREENLAB_BENCHMARK_C_REPO}
+      - GREENLAB_BENCHMARK_C_HASH=${GREENLAB_BENCHMARK_C_HASH}
+      - GREENLAB_BENCHMARK_C_URL=${GREENLAB_BENCHMARK_C_URL}
+      - GREENLAB_BENCHMARK_C_VOLUME=/var/green-lab
 
   rust:
     build:
       context: ./rust
-    user: "${UID}:${GID}"
+    container_name: greenlab-rust
     volumes:
-      - ../../applications:/src # TODO: takes pwd
-    command: bash -c 'for d in /src/*/ ; do cd $$d; cd rust; cargo build --target wasm32-wasi; done'
+      - ./wasm/rust:/var/green-lab
+    environment:
+      - GREENLAB_BENCHMARK_RUST_REPO=${GREENLAB_BENCHMARK_RUST_REPO}
+      - GREENLAB_BENCHMARK_RUST_HASH=${GREENLAB_BENCHMARK_RUST_HASH}
+      - GREENLAB_BENCHMARK_RUST_URL=${GREENLAB_BENCHMARK_RUST_URL}
+      - GREENLAB_BENCHMARK_RUST_VOLUME=/var/green-lab
 
   javascript:
     build:
