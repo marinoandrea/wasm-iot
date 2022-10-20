@@ -1,11 +1,7 @@
-/* The Computer Language Benchmarks Game
- * https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
- *
- * contributed by Christoph Bauer
- * slightly improved by Mark Hinds
- * SIMDified by Stefan Krause
- * translated in ANSI C by Francesco Massei
- */
+// The Computer Language Benchmarks Game
+// https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//
+// contributed by Shakhno DV, Shakhno AV
 
 #include <math.h>
 #include <stdio.h>
@@ -14,138 +10,135 @@
 #define pi 3.141592653589793
 #define solar_mass (4 * pi * pi)
 #define days_per_year 365.24
-
-typedef double v2df __attribute__((vector_size(2 * sizeof(double))));
-
-#define lower(_V) (((double *)&_V)[0])
-
-struct planet {
-  v2df xy;
-  v2df z0; /* z and zero */
-  v2df vxvy;
-  v2df vz00;     /* vz and zero */
-  v2df massmass; /* the mass in both components */
-};
-
 #define NBODIES 5
-static struct planet bodies[NBODIES] = {
-    {/* sun */
-     {0, 0},
-     {0, 0},
-     {0, 0},
-     {0, 0},
-     {solar_mass, solar_mass}},
-    {/* jupiter */
-     {4.84143144246472090e+00, -1.16032004402742839e+00},
-     {-1.03622044471123109e-01, 0},
-     {1.66007664274403694e-03 * days_per_year,
-      7.69901118419740425e-03 * days_per_year},
-     {-6.90460016972063023e-05 * days_per_year, 0},
-     {9.54791938424326609e-04 * solar_mass,
-      9.54791938424326609e-04 * solar_mass}},
-    {/* saturn */
-     {8.34336671824457987e+00, 4.12479856412430479e+00},
-     {-4.03523417114321381e-01, 0},
-     {-2.76742510726862411e-03 * days_per_year,
-      4.99852801234917238e-03 * days_per_year},
-     {2.30417297573763929e-05 * days_per_year, 0},
-     {2.85885980666130812e-04 * solar_mass,
-      2.85885980666130812e-04 * solar_mass}},
-    {/* uranus */
-     {1.28943695621391310e+01, -1.51111514016986312e+01},
-     {-2.23307578892655734e-01, 0},
-     {2.96460137564761618e-03 * days_per_year,
-      2.37847173959480950e-03 * days_per_year},
-     {-2.96589568540237556e-05 * days_per_year, 0},
-     {4.36624404335156298e-05 * solar_mass,
-      4.36624404335156298e-05 * solar_mass}},
-    {/* neptune */
-     {1.53796971148509165e+01, -2.59193146099879641e+01},
-     {1.79258772950371181e-01, 0},
-     {2.68067772490389322e-03 * days_per_year,
-      1.62824170038242295e-03 * days_per_year},
-     {-9.51592254519715870e-05 * days_per_year, 0},
-     {5.15138902046611451e-05 * solar_mass,
-      5.15138902046611451e-05 * solar_mass}}};
+#define DT 0.01
 
-static v2df dtdt = {0.01, 0.01};
+double x[NBODIES], y[NBODIES], z[NBODIES];
+double vx[NBODIES], vy[NBODIES], vz[NBODIES];
+double mass[NBODIES];
 
-static void advance(int q) {
-  struct planet *b, *b2;
-  v2df dxdy, dz00, tsquare, distance2, magmag;
-  int i, j, k;
-  for (k = 1; k <= q; ++k) {
-    for (i = 0; i < NBODIES; ++i) {
-      b = &(bodies[i]);
-      for (j = i + 1; j < NBODIES; j++) {
-        b2 = &(bodies[j]);
-        dxdy = b->xy - b2->xy;
-        dz00 = b->z0 - b2->z0;
-        /* dx*dx+dy*dy | dz*dz */
-        tsquare = __builtin_ia32_haddpd(dxdy * dxdy, dz00 * dz00);
-        /* dx*dx+dy*dy+dz*dz | dx*dx+dy*dy+dz*dz */
-        distance2 = __builtin_ia32_haddpd(tsquare, tsquare);
-        magmag = dtdt / (__builtin_ia32_sqrtpd(distance2) * distance2);
-        dxdy *= magmag;
-        dz00 *= magmag;
-        b->vxvy -= dxdy * b2->massmass;
-        b->vz00 -= dz00 * b2->massmass;
-        b2->vxvy += dxdy * b->massmass;
-        b2->vz00 += dz00 * b->massmass;
+void advance(int n)
+{
+  double dx;
+  double x1;
+  double y1;
+  double z1;
+  double dy;
+  double dz;
+  double R;
+  double mag;
+  for (int k = 1; k <= n; ++k)
+  {
+    for (int i = 0; i < NBODIES; ++i)
+    {
+      x1 = x[i];
+      y1 = y[i];
+      z1 = z[i];
+      for (int j = i + 1; j < NBODIES; ++j)
+      {
+        dx = x1 - x[j];
+        R = dx * dx;
+        dy = y1 - y[j];
+        R += dy * dy;
+        dz = z1 - z[j];
+        R += dz * dz;
+        R = sqrt(R);
+        mag = DT / (R * R * R);
+        vx[i] -= dx * mass[j] * mag;
+        vy[i] -= dy * mass[j] * mag;
+        vz[i] -= dz * mass[j] * mag;
+        vx[j] += dx * mass[i] * mag;
+        vy[j] += dy * mass[i] * mag;
+        vz[j] += dz * mass[i] * mag;
       }
     }
-    for (i = 0; i < NBODIES; i++) {
-      bodies[i].xy += dtdt * bodies[i].vxvy;
-      bodies[i].z0 += dtdt * bodies[i].vz00;
+
+    for (int i = 0; i < NBODIES; ++i)
+    {
+      x[i] += DT * vx[i];
+      y[i] += DT * vy[i];
+      z[i] += DT * vz[i];
     }
   }
 }
 
-static double energy() {
-  v2df e = {0.0, 0.0};
-  v2df half = {0.5, 0.5};
-  v2df sq, dxdy, dz00, distance;
-  struct planet *b, *b2;
-  int i, j;
-
-  for (i = 0; i < NBODIES; i++) {
-    b = &(bodies[i]);
-    /* b->mass*(vx*vx + vy*vy) | b->mass*(vz*vz + 0*0) */
-    sq = b->massmass *
-         __builtin_ia32_haddpd(b->vxvy * b->vxvy, b->vz00 * b->vz00);
-    sq = __builtin_ia32_haddpd(sq, sq);
-    e += half * sq;
-    for (j = i + 1; j < NBODIES; j++) {
-      b2 = &(bodies[j]);
-      dxdy = b->xy - b2->xy;
-      dz00 = b->z0 - b2->z0;
-      /* b->mass*(vx*vx + vy*vy) | b->mass*(vz*vz + 0*0) */
-      distance = __builtin_ia32_haddpd(dxdy * dxdy, dz00 * dz00);
-      distance =
-          __builtin_ia32_sqrtpd(__builtin_ia32_haddpd(distance, distance));
-      e -= (b->massmass * b2->massmass) / distance;
+double energy()
+{
+  double e = 0.0;
+  for (int i = 0; i < NBODIES; ++i)
+  {
+    e += 0.5 * mass[i] * (vx[i] * vx[i] + vy[i] * vy[i] + vz[i] * vz[i]);
+    for (int j = i + 1; j < NBODIES; ++j)
+    {
+      double dx = x[i] - x[j];
+      double dy = y[i] - y[j];
+      double dz = z[i] - z[j];
+      double distance = sqrt(dx * dx + dy * dy + dz * dz);
+      e -= (mass[i] * mass[j]) / distance;
     }
   }
-  return lower(e);
+  return e;
 }
 
-static void offset_momentum() {
-  v2df pxpy = {0.0, 0.0};
-  v2df pz00 = {0.0, 0.0};
-  v2df solar_mass_inv = {1.0 / solar_mass, 1.0 / solar_mass};
-  int i;
-  for (i = 0; i < NBODIES; i++) {
-    pxpy += bodies[i].vxvy * bodies[i].massmass;
-    pz00 += bodies[i].vz00 * bodies[i].massmass;
+void offset_momentum()
+{
+  double px = 0.0, py = 0.0, pz = 0.0;
+  for (int i = 0; i < NBODIES; ++i)
+  {
+    px += vx[i] * mass[i];
+    py += vy[i] * mass[i];
+    pz += vz[i] * mass[i];
   }
-  bodies[0].vxvy = -pxpy * solar_mass_inv;
-  bodies[0].vz00 = -pz00 * solar_mass_inv;
+  vx[0] = -px / solar_mass;
+  vy[0] = -py / solar_mass;
+  vz[0] = -pz / solar_mass;
 }
 
-int main(int argc, char **argv) {
+void init()
+{
+  x[0] = 0;
+  y[0] = 0;
+  z[0] = 0;
+  vx[0] = 0;
+  vy[0] = 0;
+  vz[0] = 0;
+  mass[0] = solar_mass;
+  x[1] = 4.84143144246472090e+00;
+  y[1] = -1.16032004402742839e+00;
+  z[1] = -1.03622044471123109e-01;
+  vx[1] = 1.66007664274403694e-03 * days_per_year;
+  vy[1] = 7.69901118419740425e-03 * days_per_year;
+  vz[1] = -6.90460016972063023e-05 * days_per_year;
+  mass[1] = 9.54791938424326609e-04 * solar_mass;
+  x[2] = 8.34336671824457987e+00;
+  y[2] = 4.12479856412430479e+00;
+  z[2] = -4.03523417114321381e-01;
+  vx[2] = -2.76742510726862411e-03 * days_per_year;
+  vy[2] = 4.99852801234917238e-03 * days_per_year;
+  vz[2] = 2.30417297573763929e-05 * days_per_year;
+  mass[2] = 2.85885980666130812e-04 * solar_mass;
+  x[3] = 1.28943695621391310e+01;
+  y[3] = -1.51111514016986312e+01;
+  z[3] = -2.23307578892655734e-01;
+  vx[3] = 2.96460137564761618e-03 * days_per_year;
+  vy[3] = 2.37847173959480950e-03 * days_per_year;
+  vz[3] = -2.96589568540237556e-05 * days_per_year;
+  mass[3] = 4.36624404335156298e-05 * solar_mass;
+  x[4] = 1.53796971148509165e+01;
+  y[4] = -2.59193146099879641e+01;
+  z[4] = 1.79258772950371181e-01;
+  vx[4] = 2.68067772490389322e-03 * days_per_year;
+  vy[4] = 1.62824170038242295e-03 * days_per_year;
+  vz[4] = -9.51592254519715870e-05 * days_per_year;
+  mass[4] = 5.15138902046611451e-05 * solar_mass;
+}
+int main(int argc, char **argv)
+{
+  int n = atoi(argv[1]);
+  init();
   offset_momentum();
   printf("%.9f\n", energy());
-  advance(atoi(argv[1]));
+  advance(n);
   printf("%.9f\n", energy());
   return 0;
 }
