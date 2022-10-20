@@ -1,0 +1,52 @@
+---
+- hosts: pis
+  tasks:
+    - name: Basic Python packages
+      become: true
+      apt:
+        update_cache: yes
+        name:
+          - python3-distutils
+          - python3-apt
+          - python3-dev
+        state: present
+
+    - name: Time
+      become: true
+      apt:
+        name: time
+        state: present
+
+    - name: PowerJoular Dependencies
+      become: true
+      apt:
+        name:
+          - gnat
+          - gprbuild
+          - libgnatcoll19-dev
+          - git
+        state: present
+
+    - name: Clone Powerjoular
+      git:
+        repo: 'https://gitlab.com/joular/powerjoular.git'
+        dest: /tmp/powerjoular
+        version: bd0dcddb4b501cfd00c79a13cfba1e1ace6a7ff0
+
+    - name: Make dir
+      file:
+        path: /tmp/powerjoular/obj
+        state: directory
+        mode: '0755'
+
+    - name: Compile
+      shell:
+        chdir: /tmp/powerjoular
+        cmd: gprbuild
+
+    - name: Move to /usr/local/bin
+      become: true
+      shell:
+        chdir: /tmp/powerjoular/obj
+        cmd: mv * /usr/local/bin/
+

@@ -1,0 +1,13 @@
+---
+- hosts: pis
+  vars:
+    wasmtime_version: v1.0.1
+  tasks:
+    - name: Dependency curl
+      become: true
+      apt:
+        name: curl
+        state: present
+
+    - name: Install wasmer # the dirty way: not really idempotent :/
+      shell: "curl https://wasmtime.dev/install.sh -sSf | bash -s -- --version {{ wasmtime_version }}"
