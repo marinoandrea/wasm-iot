@@ -16,7 +16,6 @@ extern crate numeric_array;
 
 use generic_array::typenum::consts::U4;
 use numeric_array::NumericArray;
-use rayon::prelude::*;
 use std::ops::*;
 
 type F64x4 = NumericArray<f64, U4>;
@@ -61,7 +60,7 @@ where
 {
     // Parallelize along the output vector, with each pair of slots as a
     // parallelism unit.
-    out.par_iter_mut().enumerate().for_each(|(i, slot)| {
+    out.iter_mut().enumerate().for_each(|(i, slot)| {
         *slot = dot(i as i32, v, &inv_a);
     });
 }
