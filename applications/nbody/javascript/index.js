@@ -156,8 +156,8 @@ function energy() {
   return e;
 }
 
-function main() {
-  const n = +process.argv[2];
+function main(input) {
+  const n = input.n;
 
   offsetMomentum();
 

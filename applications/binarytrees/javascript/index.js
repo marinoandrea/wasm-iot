@@ -10,8 +10,8 @@
 // https://github.com/Shopify/javy
 Shopify = { main };
 
-function main() {
-  const maxDepth = Math.max(6, +process.argv[2] || 0);
+function main(input) {
+  const maxDepth = Math.max(6, +input.n || 0);
   const stretchDepth = maxDepth + 1;
   const stretchTree = createTree(stretchDepth);
   console.log(
