@@ -44,6 +44,11 @@ func main() {
 		}
 	}
 
+	nIters := 1
+	if _nIters, err := strconv.Atoi(os.Args[2]); err == nil {
+		nIters = _nIters
+	}
+
 	if minDepth+2 > maxDepth {
 		maxDepth = minDepth + 2
 	}
@@ -54,14 +59,16 @@ func main() {
 
 	longLivedTree := bottomUpTree(maxDepth)
 
-	for depth := minDepth; depth <= maxDepth; depth += 2 {
-		iterations := 1 << uint(maxDepth-depth+minDepth)
-		check = 0
+	for iters := 0; iters < nIters; iters++ {
+		for depth := minDepth; depth <= maxDepth; depth += 2 {
+			iterations := 1 << uint(maxDepth-depth+minDepth)
+			check = 0
 
-		for i := 1; i <= iterations; i++ {
-			check += bottomUpTree(depth).itemCheck()
+			for i := 1; i <= iterations; i++ {
+				check += bottomUpTree(depth).itemCheck()
+			}
+			fmt.Printf("%d\t trees of depth %d\t check: %d\n", iterations, depth, check)
 		}
-		fmt.Printf("%d\t trees of depth %d\t check: %d\n", iterations, depth, check)
+		fmt.Printf("long lived tree of depth %d\t check: %d\n", maxDepth, longLivedTree.itemCheck())
 	}
-	fmt.Printf("long lived tree of depth %d\t check: %d\n", maxDepth, longLivedTree.itemCheck())
 }

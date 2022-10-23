@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 
 	longLivedTree = BottomUpTree(maxDepth);
 
-	for (iters = 0; iters <= M; ++iters)
+	for (iters = 0; iters < M; ++iters)
 	{
 		for (depth = minDepth; depth <= maxDepth; depth += 2)
 		{

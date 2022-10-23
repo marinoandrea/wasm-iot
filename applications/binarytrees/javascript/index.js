@@ -12,26 +12,30 @@ Shopify = { main };
 
 function main(input) {
   const maxDepth = Math.max(6, +input.n || 0);
-  const stretchDepth = maxDepth + 1;
-  const stretchTree = createTree(stretchDepth);
-  console.log(
-    `stretch tree of depth ${stretchDepth}\t check: ${checksum(stretchTree)}`
-  );
-  const longLivedTree = createTree(maxDepth);
+  const maxIters = input.m ?? 1;
 
-  for (let depth = 4; depth <= maxDepth; depth += 2) {
-    const iterations = 1 << (maxDepth - depth + 4);
-    let sum = 0;
-    for (var i = 0; i < iterations; i++) {
-      const tree = createTree(depth);
-      sum += checksum(tree);
+  for (let iters = 0; iters < maxIters; iters++) {
+    const stretchDepth = maxDepth + 1;
+    const stretchTree = createTree(stretchDepth);
+    console.log(
+      `stretch tree of depth ${stretchDepth}\t check: ${checksum(stretchTree)}`
+    );
+    const longLivedTree = createTree(maxDepth);
+
+    for (let depth = 4; depth <= maxDepth; depth += 2) {
+      const iterations = 1 << (maxDepth - depth + 4);
+      let sum = 0;
+      for (var i = 0; i < iterations; i++) {
+        const tree = createTree(depth);
+        sum += checksum(tree);
+      }
+      console.log(`${iterations}\t trees of depth ${depth}\t check: ${sum}`);
     }
-    console.log(`${iterations}\t trees of depth ${depth}\t check: ${sum}`);
-  }
 
-  console.log(
-    `long lived tree of depth ${maxDepth}\t check: ${checksum(longLivedTree)}`
-  );
+    console.log(
+      `long lived tree of depth ${maxDepth}\t check: ${checksum(longLivedTree)}`
+    );
+  }
 }
 
 function checksum(node) {
