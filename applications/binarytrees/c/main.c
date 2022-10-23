@@ -78,18 +78,19 @@ int main(int argc, char *argv[])
 
 	stretchDepth = maxDepth + 1;
 
-	stretchTree = BottomUpTree(stretchDepth);
-	printf(
-		"stretch tree of depth %u\t check: %li\n",
-		stretchDepth,
-		ItemCheck(stretchTree));
-
-	DeleteTree(stretchTree);
-
-	longLivedTree = BottomUpTree(maxDepth);
-
 	for (iters = 0; iters < M; ++iters)
 	{
+
+		stretchTree = BottomUpTree(stretchDepth);
+		printf(
+			"stretch tree of depth %u\t check: %li\n",
+			stretchDepth,
+			ItemCheck(stretchTree));
+
+		DeleteTree(stretchTree);
+
+		longLivedTree = BottomUpTree(maxDepth);
+
 		for (depth = minDepth; depth <= maxDepth; depth += 2)
 		{
 			long i, iterations, check;
@@ -111,12 +112,12 @@ int main(int argc, char *argv[])
 				depth,
 				check);
 		} /* for(depth = minDepth...) */
-	}
 
-	printf(
-		"long lived tree of depth %u\t check: %li\n",
-		maxDepth,
-		ItemCheck(longLivedTree));
+		printf(
+			"long lived tree of depth %u\t check: %li\n",
+			maxDepth,
+			ItemCheck(longLivedTree));
+	}
 
 	return 0;
 } /* main() */
