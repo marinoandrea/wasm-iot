@@ -1,8 +1,8 @@
 ---
-- hosts: managers
+- hosts: localhost
+  connection: local
   tasks:
     - name: Install Docker Dependencies
-      remote_user: green-lab-tester
       apt:
         name: "{{ item }}"
         state: present
@@ -16,7 +16,6 @@
         - docker
 
     - name: Add Docker's GPG key
-      remote_user: green-lab-tester
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
@@ -24,7 +23,6 @@
         - docker
 
     - name: Set up the stable repository
-      remote_user: green-lab-tester
       shell: >
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
         | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
@@ -32,14 +30,12 @@
         - docker
 
     - name: Update apt cache
-      remote_user: green-lab-tester
       apt:
         update_cache: yes
       tags:
         - docker
 
     - name: Install Docker & Compose Plugin
-      remote_user: green-lab-tester
       apt:
         name: "{{ item }}"
         state: present
@@ -49,14 +45,5 @@
         - docker-ce-cli 
         - containerd.io 
         - docker-compose-plugin
-      tags:
-        - docker
-
-    - name: Add "green-lab-tester" to "docker" group
-      remote_user: green-lab-tester
-      user:
-        name: "green-lab-tester"
-        group: "docker"
-        append: yes
       tags:
         - docker
