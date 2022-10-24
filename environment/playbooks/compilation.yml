@@ -1,0 +1,51 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Clone Experiment Repository
+      git:
+        repo: https://github.com/marinoandrea/green-lab.git
+        dest: /tmp/green-lab
+      tags: 
+        - compilation
+
+    - name: Compile C benchmarks
+      shell: > 
+        cd /tmp/green-lab/environment/compilation && GREENLAB_BENCHMARK_NAME={{ item }} bash -c 'docker compose run c' 
+      with_items: 
+        - binarytrees
+        - nbody
+        - spectral-norm
+      tags:
+        - compilation
+
+    - name: Compile JavaScript benchmarks
+      shell: > 
+        cd /tmp/green-lab/environment/compilation && GREENLAB_BENCHMARK_NAME={{ item }} bash -c 'docker compose run javascript' 
+      with_items: 
+        - binarytrees
+        - nbody
+        - spectral-norm
+      tags:
+        - compilation
+
+    - name: Compile Rust benchmarks
+      shell: > 
+        cd /tmp/green-lab/environment/compilation && GREENLAB_BENCHMARK_NAME={{ item }} bash -c 'docker compose run rust' 
+      with_items: 
+        - binarytrees
+        - nbody
+        - spectral-norm
+      tags:
+        - compilation
+
+    - name: Compile Go benchmarks
+      shell: > 
+        cd /tmp/green-lab/environment/compilation && GREENLAB_BENCHMARK_NAME={{ item }} bash -c 'docker compose run go' 
+      with_items: 
+        - binarytrees
+        - nbody
+        - spectral-norm
+      tags:
+        - compilation
+      
