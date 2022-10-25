@@ -1,56 +1,36 @@
-# see https://blog.giovannidemizio.eu/2021/05/24/how-to-set-user-and-group-in-docker-compose/
-# Docker will run as root and fuck-up all the generated files
-# use solution 1:
-# env UID=${UID} GID=${GID} docker-compose run c (or something different)
-
-# To get interactive shells in docker-compose add the next to line to a service:
-  #stdin_open: true # docker run -i
-  #tty: true        # docker run -t
 services:
   c:
-    build:
-      context: ./c
+    image: emscripten/emsdk:3.1.24
     container_name: greenlab-c
     volumes:
-      - ./wasm/c:/var/green-lab
-    environment:
-      - GREENLAB_BENCHMARK_C_REPO=${GREENLAB_BENCHMARK_C_REPO}
-      - GREENLAB_BENCHMARK_C_HASH=${GREENLAB_BENCHMARK_C_HASH}
-      - GREENLAB_BENCHMARK_C_URL=${GREENLAB_BENCHMARK_C_URL}
-      - GREENLAB_BENCHMARK_C_VOLUME=/var/green-lab
+      - ../../applications:/var/compilation
+    working_dir: /var/compilation/${GREENLAB_BENCHMARK_NAME}/c
+    command: emcc main.c -o ${GREENLAB_BENCHMARK_NAME}.c.wasm
 
   rust:
     build:
       context: ./rust
     container_name: greenlab-rust
     volumes:
-      - ./wasm/rust:/var/green-lab
-    environment:
-      - GREENLAB_BENCHMARK_RUST_REPO=${GREENLAB_BENCHMARK_RUST_REPO}
-      - GREENLAB_BENCHMARK_RUST_HASH=${GREENLAB_BENCHMARK_RUST_HASH}
-      - GREENLAB_BENCHMARK_RUST_URL=${GREENLAB_BENCHMARK_RUST_URL}
-      - GREENLAB_BENCHMARK_RUST_VOLUME=/var/green-lab
+      - ../../applications:/var/compilation
+    working_dir: /var/compilation/${GREENLAB_BENCHMARK_NAME}/rust
+    command: cargo build --target wasm32-wasi --release
 
   javascript:
     build:
       context: ./javascript
     container_name: greenlab-javascript
-    volumes: 
-      - ./wasm/javascript:/var/green-lab
-    environment:
-      - GREENLAB_BENCHMARK_JS_REPO=${GREENLAB_BENCHMARK_JS_REPO}
-      - GREENLAB_BENCHMARK_JS_HASH=${GREENLAB_BENCHMARK_JS_HASH}
-      - GREENLAB_BENCHMARK_JS_URL=${GREENLAB_BENCHMARK_JS_URL}
-      - GREENLAB_BENCHMARK_JS_VOLUME=/var/green-lab
+    volumes:
+      - ../../applications:/var/compilation
+    working_dir: /var/compilation/${GREENLAB_BENCHMARK_NAME}/javascript
+    command: /var/javy/target/release/javy index.js -o ${GREENLAB_BENCHMARK_NAME}.javascript.wasm
 
   go:
-    build:
-      context: ./go
+    image: tinygo/tinygo:0.26.0
     container_name: greenlab-go
     volumes: 
-      - ./wasm/go:/var/green-lab
-    environment:
-      - GREENLAB_BENCHMARK_GO_REPO=${GREENLAB_BENCHMARK_GO_REPO}
-      - GREENLAB_BENCHMARK_GO_HASH=${GREENLAB_BENCHMARK_GO_HASH}
-      - GREENLAB_BENCHMARK_GO_ROOT_URL=${GREENLAB_BENCHMARK_GO_ROOT_URL}
-      - GREENLAB_BENCHMARK_GO_VOLUME=/var/green-lab
+      - ../../applications:/var/compilation
+    working_dir: /var/compilation/${GREENLAB_BENCHMARK_NAME}/go
+    command: tinygo build -o ${GREENLAB_BENCHMARK_NAME}.go.wasm -target wasm --no-debug ./main.go
+
+
