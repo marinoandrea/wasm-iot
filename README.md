@@ -17,7 +17,7 @@ In order to actually run the experiments we leverage the [Experiment Runner](htt
 Our setup is fully automated via Ansible which in turn depends on Python 3. Therefore, these two represent our only direct dependencies. If you have Python 3 installed on your system you can simply run:
 
 ```bash
-python3 -m pip install --user ansible
+python3 -m pip install --user ansible==2.13.2
 ```
 
 ### Experimental Setup
