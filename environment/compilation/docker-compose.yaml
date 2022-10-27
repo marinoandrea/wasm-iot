@@ -31,6 +31,6 @@ services:
     volumes: 
       - ../../applications:/var/compilation
     working_dir: /var/compilation/${GREENLAB_BENCHMARK_NAME}/go
-    command: tinygo build -o ${GREENLAB_BENCHMARK_NAME}.go.wasm -target wasm --no-debug ./main.go
+    command: tinygo build -o ${GREENLAB_BENCHMARK_NAME}.go.wasm -target=wasi --no-debug ./main.go
 
 
