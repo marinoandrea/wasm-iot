@@ -6,14 +6,14 @@
     - name: Dependency libtinfo5 # see https://github.com/wasmerio/wasmer/issues/1651
       become: true
       apt:
-        name: libtinfo5==6.2+20201114-2
+        name: libtinfo5=6.2+20201114-2
         update_cache: yes
         state: present
 
     - name: Dependency curl
       become: true
       apt:
-        name: curl==7.74.0-1.3+deb11u3
+        name: curl=7.74.0-1.3+deb11u3
         state: present
 
     - name: Install wasmer # the dirty way: not really idempotent :/
