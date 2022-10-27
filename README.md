@@ -1,5 +1,7 @@
 # IoT with WebAssembly: Comparison of Programming Languages and Runtime Environments
 
+[![DOI](https://zenodo.org/badge/533303423.svg)](https://zenodo.org/badge/latestdoi/533303423)
+
 This repository contains the experimental setup for the experiments conducted during the Green Lab course 2022 at Vrije Universiteit, Amsterdam.
 
 Our research studies sustainability and performance implications of WASM-based implementations for typical IoT computing tasks. Our aim is to understand the viability of this technology in real-world applications with respect to energy efficiency and memory footprint.
