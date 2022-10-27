@@ -7,7 +7,7 @@ This repository contains the experimental setup for the experiments conducted du
 Our research studies sustainability and performance implications of WASM-based implementations for typical IoT computing tasks. Our aim is to understand the viability of this technology in real-world applications with respect to energy efficiency and memory footprint.  
 For this, we run different benchmarks on a Raspberry Pi 3B.
 
-This main repository holds the necessary configuration files and scripts for setting up the testing environment as we aimed for full reproducibility. We leverage [Docker](https://www.docker.com/) (v20.10.18) and [Ansible](https://www.ansible.com/) (v2.13.2) to make this setup as streamlined as possible.
+This main repository holds the necessary configuration files and scripts for setting up the testing environment as we aimed for full reproducibility. We leverage [Docker](https://www.docker.com/) (v20.10.18) and [Ansible](https://www.ansible.com/) (v6.5.0) to make this setup as streamlined as possible.
 
 In order to actually run the experiments we leverage the [Experiment Runner](https://github.com/S2-group/experiment-runner) tool which we forked and extended in this [other repository](https://github.com/marinoandrea/experiment-runner-green-lab-2022) (also available as a Git submodule).
 
@@ -20,8 +20,15 @@ The Raspberry Pi runs Raspberry Pi OS Lite (64-Bit, release 2022-09-22).
 Our setup is fully automated via Ansible which in turn depends on Python 3. Therefore, these two represent our only direct dependencies. If you have Python 3 installed on your system you can simply run:
 
 ```bash
-python3 -m pip install --user ansible==2.13.2
+python3 -m pip install --user ansible==6.5.0
 ```
+
+If you experience the error `/usr/bin/python3: No module named pip`, you need to install pip. Do this by running
+```bash
+sudo apt install python3-pip==22.0.2+dfsg-1
+```
+
+Make sure to also (permanently) [add `~/.local/bin` to your `$PATH` variable](https://linuxconfig.org/permanently-add-a-directory-to-shell-path) so your shell can resolve the `ansible` command
 
 ### Experimental Setup
 
@@ -31,10 +38,10 @@ The compilation step requires some dependencies. Specifically, we need to setup 
 
 #### Install Docker packages
 
-Run the following command, this will prompt you to insert the sudo password for the current user on `localhost`:
+Run the following command, this will prompt you to insert the sudo password (two times) for the current user on `localhost`:
 
 ```bash
-ansible-playbook playbooks/docker.yml -bkK
+ansible-playbook environment/playbooks/docker.yml -bkK
 ```
 
 #### Compile Benchmarks
@@ -42,5 +49,5 @@ ansible-playbook playbooks/docker.yml -bkK
 Run the following command to compile all the selected benchmarks for all languages:
 
 ```bash
-ansible-playbook playbooks/compilation.yml
+ansible-playbook environment/playbooks/compilation.yml
 ```
