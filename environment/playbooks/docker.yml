@@ -47,3 +47,10 @@
         - docker-compose-plugin=2.12.2~ubuntu-focal
       tags:
         - docker
+
+    - name: Add local user to docker group
+      become: yes
+      user:
+        name: '{{ ansible_user }}'
+        groups: docker
+        append: yes
