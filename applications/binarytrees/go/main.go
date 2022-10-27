@@ -54,12 +54,12 @@ func main() {
 	}
 	stretchDepth := maxDepth + 1
 
-	check := bottomUpTree(stretchDepth).itemCheck()
-	fmt.Printf("stretch tree of depth %d\t check: %d\n", stretchDepth, check)
-
-	longLivedTree := bottomUpTree(maxDepth)
-
 	for iters := 0; iters < nIters; iters++ {
+		check := bottomUpTree(stretchDepth).itemCheck()
+		fmt.Printf("stretch tree of depth %d\t check: %d\n", stretchDepth, check)
+
+		longLivedTree := bottomUpTree(maxDepth)
+
 		for depth := minDepth; depth <= maxDepth; depth += 2 {
 			iterations := 1 << uint(maxDepth-depth+minDepth)
 			check = 0
