@@ -1,3 +1,4 @@
 [submodule "experiment-runner"]
 	path = experiment-runner
-	url = https://github.com/marinoandrea/experiment-runner.git
+	url = https://github.com/marinoandrea/experiment-runner
+	branch = master
