@@ -4,13 +4,16 @@
 
 This repository contains the experimental setup for the experiments conducted during the Green Lab course 2022 at Vrije Universiteit, Amsterdam.
 
-Our research studies sustainability and performance implications of WASM-based implementations for typical IoT computing tasks. Our aim is to understand the viability of this technology in real-world applications with respect to energy efficiency and memory footprint.
+Our research studies sustainability and performance implications of WASM-based implementations for typical IoT computing tasks. Our aim is to understand the viability of this technology in real-world applications with respect to energy efficiency and memory footprint.  
+For this, we run different benchmarks on a Raspberry Pi 3B.
 
 This main repository holds the necessary configuration files and scripts for setting up the testing environment as we aimed for full reproducibility. We leverage [Docker](https://www.docker.com/) (v20.10.18) and [Ansible](https://www.ansible.com/) (v2.13.2) to make this setup as streamlined as possible.
 
 In order to actually run the experiments we leverage the [Experiment Runner](https://github.com/S2-group/experiment-runner) tool which we forked and extended in this [other repository](https://github.com/marinoandrea/experiment-runner-green-lab-2022) (also available as a Git submodule).
 
 ## Setup
+We have tested our setup on Ubuntu 22.04.1 and Python3.10.6.  
+The Raspberry Pi runs Raspberry Pi OS Lite (64-Bit, release 2022-09-22).
 
 ### Preliminary Dependencies
 
