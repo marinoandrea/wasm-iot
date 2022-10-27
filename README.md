@@ -36,13 +36,14 @@ Our experimental setup uses the localhost for benchmark compilation (targeting W
 
 The compilation step requires some dependencies. Specifically, we need to setup a Docker + `docker-compose` environment. In order to do so, `ansible` must run with elevated privileges.
 
-#### Install Docker packages
+#### Install Docker packages on your local system
 
 Run the following command, this will prompt you to insert the sudo password (two times) for the current user on `localhost`:
 
 ```bash
 ansible-playbook environment/playbooks/docker.yml -bkK
 ```
+Because the playbook adds your user to the `docker` group, you might need to restart your system for the changes to become effective.
 
 #### Compile Benchmarks
 
@@ -50,4 +51,25 @@ Run the following command to compile all the selected benchmarks for all languag
 
 ```bash
 ansible-playbook environment/playbooks/compilation.yml
+```
+
+## Setup Pi
+### Configure the inventory
+To allow Ansible to connect to the Pis, add your Pi(s) to `environment/inventory/pi.ini`.
+In the file committed to this repository, we assume that all Pis have the same username and password. If this is not the case for you, adapt the config by setting the login data as host variables (see [here](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html)).
+
+### Execute the playbooks
+To install the tools we use for capturing time and energy, run
+```bash
+ansible-playbook -v -i environment/inventory/pi.ini environment/playbooks/measure.yml
+```
+
+To install Wasmer we use for capturing time and energy, run
+```bash
+ansible-playbook -v -i environment/inventory/pi.ini environment/playbooks/wasmer.yml
+```
+
+To install Wasmtime we use for capturing time and energy, run
+```bash
+ansible-playbook -v -i environment/inventory/pi.ini environment/playbooks/wasmtime.yml
 ```
