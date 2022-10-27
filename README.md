@@ -34,8 +34,8 @@ ansible-playbook playbooks/docker.yml -bkK
 
 #### Compile Benchmarks
 
-Run the following command, this will prompt you to insert the sudo password for the current user on `localhost`:
+Run the following command to compile all the selected benchmarks for all languages:
 
 ```bash
-ansible-playbook playbooks/compilation.yml -bkK
+ansible-playbook playbooks/compilation.yml
 ```
