@@ -48,9 +48,9 @@
       tags:
         - docker
 
-    - name: Add local user to docker group
+    - name: Add "{{ ansible_env.SUDO_USER }}" to docker group
       become: yes
       user:
-        name: '{{ ansible_user }}'
+        name: "{{ ansible_env.SUDO_USER }}"
         groups: docker
         append: yes
