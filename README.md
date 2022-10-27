@@ -25,7 +25,7 @@ python3 -m pip install --user ansible==6.5.0
 
 If you experience the error `/usr/bin/python3: No module named pip`, you need to install pip. Do this by running
 ```bash
-sudo apt install python3-pip==22.0.2+dfsg-1
+sudo apt install python3-pip=22.0.2+dfsg-1
 ```
 
 Make sure to also (permanently) [add `~/.local/bin` to your `$PATH` variable](https://linuxconfig.org/permanently-add-a-directory-to-shell-path) so your shell can resolve the `ansible` command
