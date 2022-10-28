@@ -13,7 +13,7 @@
     - name: Clone Runner Project
       git:
         repo: 'https://github.com/marinoandrea/experiment-runner.git'
-        dest: "/home/{{ ansible_user }}/experiment-runner"
+        dest: "/home/{{ ansible_user }}/experiment-runner-green-lab-2022"
 
     - name: Install Virtualenv
       become: true
@@ -23,6 +23,6 @@
 
     - name: Install Runner Requirements
       pip: 
-        requirements: "/home/{{ ansible_user }}/experiment-runner/requirements.txt"
+        requirements: "/home/{{ ansible_user }}/experiment-runner-green-lab-2022/requirements.txt"
         virtualenv: "/home/{{ ansible_user }}/experiment"
         virtualenv_python: python3.9
