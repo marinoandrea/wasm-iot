@@ -54,6 +54,14 @@ ansible-playbook environment/playbooks/compilation.yml
 ```
 
 ## Setup Pi
+
+### Install sshpass
+We connect to the Pis with a password. This requires the package `sshpass`:
+```bash
+sudo apt install sshpass=1.09-1
+```
+Further, you should once connect to your Pi(s) via `ssh` and add them to your known hosts for Ansible to run properly.
+
 ### Configure the inventory
 To allow Ansible to connect to the Pis, add your Pi(s) to `environment/inventory/pi.ini`.
 In the file committed to this repository, we assume that all Pis have the same username and password. If this is not the case for you, adapt the config by setting the login data as host variables (see [here](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html)).
