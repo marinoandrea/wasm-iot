@@ -1,0 +1,28 @@
+---
+- hosts: pis
+  tasks:
+    - name: Install Git and Pip
+      become: true
+      apt:
+        name:
+          - git=1:2.30.2-1
+          - python3-pip=20.3.4-4+rpt1+deb11u1
+        update_cache: true
+        state: present
+
+    - name: Clone Runner Project
+      git:
+        repo: 'https://github.com/marinoandrea/experiment-runner.git'
+        dest: "/home/{{ ansible_user }}/experiment-runner"
+
+    - name: Install Virtualenv
+      become: true
+      pip:
+        name: virtualenv==20.16.6
+        executable: pip3
+
+    - name: Install Runner Requirements
+      pip: 
+        requirements: "/home/{{ ansible_user }}/experiment-runner/requirements.txt"
+        virtualenv: "/home/{{ ansible_user }}/experiment"
+        virtualenv_python: python3.9
