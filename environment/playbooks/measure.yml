@@ -1,50 +1,52 @@
 ---
 - hosts: pis
+  vars:
+    powerjoular_version: bd0dcddb4b501cfd00c79a13cfba1e1ace6a7ff0
   tasks:
-    - name: Basic Python packages
+    - name: Install Basic Python Packages
       become: true
       apt:
         update_cache: yes
         name:
-          - python3-distutils
-          - python3-apt
-          - python3-dev
+          - python3-distutils=3.9.2-1
+          - python3-apt=2.2.1
+          - python3-dev=3.9.2-3
         state: present
 
-    - name: Time
+    - name: Install Time
       become: true
       apt:
-        name: time
+        name: time=1.9-0.1
         state: present
 
-    - name: PowerJoular Dependencies
+    - name: Install PowerJoular Dependencies
       become: true
       apt:
         name:
-          - gnat
-          - gprbuild
-          - libgnatcoll19-dev
-          - git
+          - gnat=10.1
+          - gprbuild=2021.0.0.0778b109-5
+          - libgnatcoll19-dev=21.0.0-4
+          - git=1:2.30.2-1
         state: present
 
     - name: Clone Powerjoular
       git:
         repo: 'https://gitlab.com/joular/powerjoular.git'
         dest: /tmp/powerjoular
-        version: bd0dcddb4b501cfd00c79a13cfba1e1ace6a7ff0
+        version: "{{ powerjoular_version }}"
 
-    - name: Make dir
+    - name: Create PowerJoular Binary Folder
       file:
         path: /tmp/powerjoular/obj
         state: directory
         mode: '0755'
 
-    - name: Compile
+    - name: Compile PowerJoular
       shell:
         chdir: /tmp/powerjoular
         cmd: gprbuild
 
-    - name: Move to /usr/local/bin
+    - name: Move PowerJoular to /usr/local/bin
       become: true
       shell:
         chdir: /tmp/powerjoular/obj

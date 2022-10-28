@@ -6,8 +6,8 @@
     - name: Dependency curl
       become: true
       apt:
-        name: curl
+        name: curl=7.74.0-1.3+deb11u3
         state: present
 
-    - name: Install wasmer # the dirty way: not really idempotent :/
+    - name: Install Wasmtime # the dirty way: not really idempotent :/
       shell: "curl https://wasmtime.dev/install.sh -sSf | bash -s -- --version {{ wasmtime_version }}"
