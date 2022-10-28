@@ -33,7 +33,7 @@
       git:
         repo: 'https://gitlab.com/joular/powerjoular.git'
         dest: /tmp/powerjoular
-        version: {{ powerjoular_version }}
+        version: "{{ powerjoular_version }}"
 
     - name: Create PowerJoular Binary Folder
       file:
