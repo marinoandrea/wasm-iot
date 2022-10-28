@@ -117,6 +117,8 @@ int main(int argc, char *argv[])
 			"long lived tree of depth %u\t check: %li\n",
 			maxDepth,
 			ItemCheck(longLivedTree));
+
+		DeleteTree(longLivedTree);
 	}
 
 	return 0;
