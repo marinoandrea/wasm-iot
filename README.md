@@ -11,7 +11,19 @@ This main repository holds the necessary configuration files and scripts for set
 
 In order to actually run the experiments we leverage the [Experiment Runner](https://github.com/S2-group/experiment-runner) tool which we forked and extended in this [other repository](https://github.com/marinoandrea/experiment-runner-green-lab-2022) (also available as a Git submodule).
 
+## Folder Structure
+
+This repository is organized in the following subdirectories:
+
+- **analysis**: this folder contains our data analysis scripts (mostly R with some small Python utilities) and our final assets (plots and dataset CSVs).
+- **applications** this folder contains our benchmark applications, we relied on [The Computer Language Benchmarks Game](https://salsa.debian.org/benchmarksgame-team/benchmarksgame/) but we slightly modified the algorithms to comply with our runtime requirements.
+- **environment**: this folder contains our Docker and Ansible setup configuration (playbooks and `docker-compose` environment) alongside and example of Ansible inventory.
+- **experiment-runner**: this submodule refers to our fork of the [Experiment Runner](https://github.com/S2-group/experiment-runner), which we extended to support our experimental setup.
+
+Each subdirectory contains a small README which provides some more details about its content.
+
 ## Setup
+
 We have tested our setup on Ubuntu 22.04.1 and Python3.10.6.  
 The Raspberry Pi runs Raspberry Pi OS Lite (64-Bit, release 2022-09-22).
 
@@ -24,6 +36,7 @@ python3 -m pip install --user ansible==6.5.0
 ```
 
 If you experience the error `/usr/bin/python3: No module named pip`, you need to install pip. Do this by running
+
 ```bash
 sudo apt install python3-pip=22.0.2+dfsg-1
 ```
@@ -43,6 +56,7 @@ Run the following command, this will prompt you to insert the sudo password (two
 ```bash
 ansible-playbook environment/playbooks/docker.yml -bkK
 ```
+
 Because the playbook adds your user to the `docker` group, you might need to restart your system for the changes to become effective.
 
 #### Compile Benchmarks
@@ -56,28 +70,36 @@ ansible-playbook environment/playbooks/compilation.yml
 ## Setup Pi
 
 ### Install sshpass
+
 We connect to the Pis with a password. This requires the package `sshpass`:
+
 ```bash
 sudo apt install sshpass=1.09-1
 ```
+
 Further, you should once connect to your Pi(s) via `ssh` and add them to your known hosts for Ansible to run properly.
 
 ### Configure the inventory
+
 To allow Ansible to connect to the Pis, add your Pi(s) to `environment/inventory/pi.ini`.
 In the file committed to this repository, we assume that all Pis have the same username and password. If this is not the case for you, adapt the config by setting the login data as host variables (see [here](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html)).
 
 ### Execute the playbooks
+
 To install the tools we use for capturing time and energy, run
+
 ```bash
 ansible-playbook -v -i environment/inventory/pi.ini environment/playbooks/measure.yml
 ```
 
 To install Wasmer we use for capturing time and energy, run
+
 ```bash
 ansible-playbook -v -i environment/inventory/pi.ini environment/playbooks/wasmer.yml
 ```
 
 To install Wasmtime we use for capturing time and energy, run
+
 ```bash
 ansible-playbook -v -i environment/inventory/pi.ini environment/playbooks/wasmtime.yml
 ```
