@@ -36,7 +36,7 @@ pl_memory <-
   scale_y_continuous(trans='log2') +
   base_outliars +
   base_theme +
-  labs(x="programming language", y = "memory usage (MB)")
+  labs(x="programming language", y = "memory usage (%)")
 print(pl_memory)
 
 # Hypothesis H^re
@@ -62,7 +62,7 @@ re_memory <-
   scale_y_continuous(trans='log2') +
   base_outliars +
   base_theme +
-  labs(x="runtime", y = "memory usage (MB)")
+  labs(x="runtime", y = "memory usage (%)")
 print(re_memory)
 
 # Hypothesis H^{pl, re}
@@ -90,6 +90,6 @@ plre_memory <-
   scale_y_continuous(trans='log2') +
   base_outliars +
   base_theme +
-  labs(x="runtime", y = "memory usage (MB)") +
+  labs(x="runtime", y = "memory usage (%)") +
   scale_fill_grey()
 print(plre_memory)
