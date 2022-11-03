@@ -1,4 +1,4 @@
-install.packages("ggplot2"); library(ggplot2)
+if (!require("ggplot2")) install.packages("ggplot2"); library(ggplot2)
 
 df <- read.csv(file.choose(), sep='\t')
 df <- data.frame(
