@@ -154,3 +154,11 @@ cython_debug/
 
 # Dev
 .vscode
+
+# R
+.Rproj.user
+.R*
+*.Rproj
+
+# Apple
+.DS_Store
