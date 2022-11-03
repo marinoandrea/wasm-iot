@@ -24,19 +24,19 @@ plot_boxplot <- function(aes_selection, x_label, y_label, log) {
   
 # Hypothesis H^pl
 
-pl_energy <- plot_boxplot(
+plot_boxplot(
   aes(x=language, y=energy_usage, color=language), 
   x_label="programming language",
   y_label="energy usage (Joules)",
   log=TRUE)
 
-pl_time <- plot_boxplot(
+plot_boxplot(
   aes(x=language, y=execution_time, color=language), 
   x_label="programming language",
   y_label="execution time (s)",
   log=TRUE)
 
-pl_memory <- plot_boxplot(
+plot_boxplot(
   aes(x=language, y=memory_usage, color=language), 
   x_label="programming language",
   y_label="memory usage (%)",
@@ -44,19 +44,19 @@ pl_memory <- plot_boxplot(
 
 # Hypothesis H^re
 
-re_energy <- plot_boxplot(
+plot_boxplot(
   aes(x=runtime, y=energy_usage, color=runtime), 
   x_label="runtime",
   y_label="energy usage (Joules)",
   log=TRUE)
 
-re_time <- plot_boxplot(
+plot_boxplot(
   aes(x=runtime, y=execution_time, color=runtime), 
   x_label="runtime",
   y_label="execution time (s)",
   log=TRUE)
 
-re_memory <- plot_boxplot(
+plot_boxplot(
   aes(x=runtime, y=memory_usage, color=runtime), 
   x_label="runtime",
   y_label="memory usage (%)",
@@ -64,19 +64,19 @@ re_memory <- plot_boxplot(
 
 # Hypothesis H^{pl, re}
 
-plre_energy <- plot_boxplot(
+plot_boxplot(
   aes(x=language, y=energy_usage, color=language, fill=runtime),
   x_label="programming language",
   y_label="energy usage (Joules)",
   log=TRUE)
 
-plre_time <- plot_boxplot(
+plot_boxplot(
   aes(x=language, y=execution_time, color=language, fill=runtime),
   x_label="programming language",
   y_label="execution time (s)",
   log=TRUE)
 
-plre_memory <- plot_boxplot(
+plot_boxplot(
   aes(x=language, y=memory_usage, color=language, fill=runtime),
   x_label="programming language",
   y_label="memory usage (%)",
