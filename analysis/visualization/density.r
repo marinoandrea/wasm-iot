@@ -3,15 +3,7 @@ if (!require("plur")) install.packages("plyr");
 
 library(ggplot2)
 library(plyr)
-
-df <- read.csv(file.choose(), sep='\t')
-df <- data.frame(
-  language = as.factor(c(df$language)),
-  runtime = as.factor(c(df$runtime)),
-  energy_usage = as.numeric(df$energy_usage),
-  execution_time = as.numeric(df$execution_time) / 1000, # in seconds
-  memory_usage = as.numeric(df$memory_usage),
-  cpu_usage = as.numeric(df$cpu_usage))
+source("utils.r")
 
 base_theme    <- theme(text = element_text(size = 20))
 base_style    <- geom_density(alpha = 0.3)
@@ -45,25 +37,30 @@ plot_density <- function(df_partial, mean_discriminators, x_scale="log2", y_scal
   print(memory)
 }
 
-# Hypothesis H^pl
+main <- function() {
+  df <- read_dataset()
 
-for (language in c('c', 'go', 'rust', 'javascript')) {
-  df_partial <- subset(df, df$language == language)
-  plot_density(df_partial, mean_discriminators=c("language"))
-}
-
-# Hypothesis H^re
-
-for (runtime in c('wasmer', 'wasmtime')) {
-  df_partial <- subset(df, df$runtime == runtime)
-  plot_density(df_partial, mean_discriminators=c("runtime"))
-}
-
-# Hypothesis H^{pl, re}
-
-for (language in c('c', 'go', 'rust', 'javascript')) {
-  for (runtime in c('wasmer', 'wasmtime')) {
-    df_partial <- subset(df, df$runtime == runtime & df$language == language)
-    plot_density(df_partial, mean_discriminators=c("language", "runtime"))
+  # Hypothesis H^pl
+  for (language in c('c', 'go', 'rust', 'javascript')) {
+    df_partial <- subset(df, df$language == language)
+    plot_density(df_partial, mean_discriminators=c("language"))
   }
+
+  # Hypothesis H^re
+  for (runtime in c('wasmer', 'wasmtime')) {
+    df_partial <- subset(df, df$runtime == runtime)
+    plot_density(df_partial, mean_discriminators=c("runtime"))
+  }
+
+  # Hypothesis H^{pl, re}
+  for (language in c('c', 'go', 'rust', 'javascript')) {
+    for (runtime in c('wasmer', 'wasmtime')) {
+        df_partial <- subset(df, df$runtime == runtime & df$language == language)
+        plot_density(df_partial, mean_discriminators=c("language", "runtime"))
+    }
+  }
+}
+
+if(!interactive()) {
+  main()
 }
