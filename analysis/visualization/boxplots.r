@@ -12,84 +12,72 @@ df <- data.frame(
 # base visualization style settings
 base_theme    <- theme(text = element_text(size = 20))
 base_outliars <- geom_boxplot(outlier.colour="red", outlier.size=1)
+
+plot_boxplot <- function(aes_selection, x_label, y_label, log) {
+  plot <- ggplot(df, aes(x=language, y=energy_usage, color=language)) +
+    base_outliars +
+    base_theme +
+    labs(x=x_label, y=y_label)
+  if (log) plot <- plot + scale_y_continuous(trans='log2') +
+  print(plot)
+}
   
 # Hypothesis H^pl
 
-pl_energy <- 
-  ggplot(df, aes(x=language, y=energy_usage, color=language)) +
-  scale_y_continuous(trans='log2') +
-  base_outliars +
-  base_theme +
-  labs(x="programming language", y = "energy usage (Joules)")
-print(pl_energy)
+pl_energy <- plot_boxplot(
+  aes(x=language, y=energy_usage, color=language), 
+  x_label="programming language",
+  y_label="energy usage (Joules)",
+  log=TRUE)
 
-pl_time <-
-  ggplot(df, aes(x=language, y=execution_time, color=language)) +
-  scale_y_continuous(trans='log2') +
-  base_outliars +
-  base_theme +
-  labs(x="programming language", y = "execution time (s)")
-print(pl_time)
+pl_time <- plot_boxplot(
+  aes(x=language, y=execution_time, color=language), 
+  x_label="programming language",
+  y_label="execution time (s)",
+  log=TRUE)
 
-pl_memory <- 
-  ggplot(df, aes(x=language, y=memory_usage, color=language)) +
-  scale_y_continuous(trans='log2') +
-  base_outliars +
-  base_theme +
-  labs(x="programming language", y = "memory usage (%)")
-print(pl_memory)
+pl_memory <- plot_boxplot(
+  aes(x=language, y=memory_usage, color=language), 
+  x_label="programming language",
+  y_label="memory usage (%)",
+  log=TRUE)
 
 # Hypothesis H^re
 
-re_energy <- 
-  ggplot(df, aes(x=runtime, y=energy_usage, color=runtime)) +
-  scale_y_continuous(trans='log2') +
-  base_outliars +
-  base_theme +
-  labs(x="runtime", y = "energy usage (Joules)")
-print(re_energy)
+re_energy <- plot_boxplot(
+  aes(x=runtime, y=energy_usage, color=runtime), 
+  x_label="runtime",
+  y_label="energy usage (Joules)",
+  log=TRUE)
 
-re_time <- 
-  ggplot(df, aes(x=runtime, y=execution_time, color=runtime)) +
-  scale_y_continuous(trans='log2') +
-  base_outliars +
-  base_theme +
-  labs(x="runtime", y = "execution time (s)")
-print(re_time)
+re_time <- plot_boxplot(
+  aes(x=runtime, y=execution_time, color=runtime), 
+  x_label="runtime",
+  y_label="execution time (s)",
+  log=TRUE)
 
-re_memory <- 
-  ggplot(df, aes(x=runtime, y=memory_usage, color=runtime)) +
-  scale_y_continuous(trans='log2') +
-  base_outliars +
-  base_theme +
-  labs(x="runtime", y = "memory usage (%)")
-print(re_memory)
+re_memory <- plot_boxplot(
+  aes(x=runtime, y=memory_usage, color=runtime), 
+  x_label="runtime",
+  y_label="memory usage (%)",
+  log=TRUE)
 
 # Hypothesis H^{pl, re}
 
-plre_energy <-
-  ggplot(df, aes(x=language, y=energy_usage, color=language, fill=runtime)) +
-  scale_y_continuous(trans='log2') +
-  base_outliars +
-  base_theme +
-  labs(x="runtime", y = "energy usage(Joules)") +
-  scale_fill_grey()
-print(plre_energy)
+plre_energy <- plot_boxplot(
+  aes(x=language, y=energy_usage, color=language, fill=runtime),
+  x_label="programming language",
+  y_label="energy usage (Joules)",
+  log=TRUE)
 
-plre_time <-
-  ggplot(df, aes(x=language, y=execution_time, color=language, fill=runtime)) +
-  scale_y_continuous(trans='log2') +
-  base_outliars +
-  base_theme +
-  labs(x="runtime", y = "execution time (s)") +
-  scale_fill_grey()
-print(plre_time)
+plre_time <- plot_boxplot(
+  aes(x=language, y=execution_time, color=language, fill=runtime),
+  x_label="programming language",
+  y_label="execution time (s)",
+  log=TRUE)
 
-plre_memory <-
-  ggplot(df, aes(x=language, y=memory_usage, color=language, fill=runtime)) +
-  scale_y_continuous(trans='log2') +
-  base_outliars +
-  base_theme +
-  labs(x="runtime", y = "memory usage (%)") +
-  scale_fill_grey()
-print(plre_memory)
+plre_memory <- plot_boxplot(
+  aes(x=language, y=memory_usage, color=language, fill=runtime),
+  x_label="programming language",
+  y_label="memory usage (%)",
+  log=TRUE)
