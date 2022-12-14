@@ -1,4 +1,4 @@
-# IoT with WebAssembly: Comparison of Programming Languages and Runtime Environments
+# On the Energy Consumption and Performance of WebAssembly Binaries across Source Programming Languages and Runtime Environments in IoT
 
 [![DOI](https://zenodo.org/badge/533303423.svg)](https://zenodo.org/badge/latestdoi/533303423)
 
