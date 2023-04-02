@@ -9,7 +9,7 @@ This study has been designed, developed, and reported by the following investiga
 **Anonymous while under review.**
 
 For any information, interested researchers can contact us by sending an email to any of the investigators listed above.
-A full replication package, including the software setup for conducting our experiments, benchmarks, an Ansible and Docker setup package, the final dataset generated, and scripts to analyse and visualize the resulting data. 
+A full replication package, including the software setup for conducting our experiments, benchmarks, an Ansible and Docker setup package, the final dataset generated, and scripts to analyse and visualize the resulting data are described below. 
 
 ## How to cite the dataset
 If the dataset and/or experiment setup is helping your research, consider to cite it as follows, thanks!
