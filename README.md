@@ -30,12 +30,13 @@ This replication package is structured as follows:
     |--- experiment-runner @ 1613d3d    The experiment setup based on an ICSE 2012 tool demo paper. This Git submodule represents our modifications to the original project to fit the needs of this paper.
 ```
 
-The `experiment-runner @ 1613d3d` is based on this **[ICSE 2012 tool demo paper](https://github.com/S2-group/robot-runner/blob/master/documentation/ICSE_2021.pdf)**, and was forked from [this repository](https://github.com/S2-group/experiment-runner).
+The `experiment-runner @ 1613d3d` is based on *Robot Runner* introduced by Stan Swanborn et al. in [Robot Runner: A Tool for Automatically Executing Experiments on Robotics Software](https://doi.org/10.1109/ICSE-Companion52605.2021.00029), and was forked from [this repository](https://github.com/S2-group/experiment-runner).
 
 Each of the folders listed above are described in details in the remaining of this readme. Crutially, the [USAGE.md](./USAGE.md) describe how to use this replication package in detail.
 
 ### Analysis
 ---
+This folder contains the data that has been generated through our experiments, scripts to process, analyse, and visualize this data, and the final visualization results.
 ```
 analysis
     .
@@ -61,6 +62,9 @@ The data in the TSV file has been generated from several results and different e
 
 ### Applications
 ---
+This folder contains the benchmarks used in our experiments. Four different computational problems, implemented in four different porgramming languages.
+All benchmarks are taken from [The Computer Language Benchmarks Game](https://benchmarksgame-team.pages.debian.net/benchmarksgame/index.html) and, if needed, adapter for our purposes.
+They do not use multi-threading, as WASM does not support that out-of-the-box.
 ```
 applications
     .
@@ -86,10 +90,9 @@ applications
         |--- rust/
 ```
 
-All of these implementations are very basic to enable comparison. They do not use multi-threading, as WASM does not support that out-of-the-box.
-
-### Envrionment
+### Environment
 ---
+This folder contains an Ansible setup used to automatically deploy the experiment setup on multiple network devices at once, and a Docker setup to compile our benchmarks to WASM executables.
 ```
 environment
     .
