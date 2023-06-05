@@ -12,9 +12,25 @@ For any information, interested researchers can contact us by sending an email t
 A full replication package, including the software setup for conducting our experiments, benchmarks, an Ansible and Docker setup package, the final dataset generated, and scripts to analyse and visualize the resulting data are described below. 
 
 ## How to cite the dataset
-If the dataset and/or experiment setup is helping your research, consider to cite it as follows, thanks!
+If the dataset and/or experiment setup is helping your research, consider to cite our study as follows, thanks!
 
-**Unavailable until publication.**
+```
+@inproceedings{10.1145/3593434.3593454,
+author = {Wagner, Linus and Mayer, Maximilian and Marino, Andrea and Soldani Nezhad, Alireza and Zwaan, Hugo and Malavolta, Ivano},
+title = {On the Energy Consumption and Performance of WebAssembly Binaries across Programming Languages and Runtimes in IoT},
+year = {2023},
+isbn = {9798400700446},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3593434.3593454},
+doi = {10.1145/3593434.3593454},
+booktitle = {Proceedings of the 27th International Conference on Evaluation and Assessment in Software Engineering},
+pages = {72–82},
+numpages = {11},
+location = {Oulu, Finland},
+series = {EASE '23}
+}
+```
 
 ### Overview of the replication package
 ---
