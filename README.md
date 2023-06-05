@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/533303423.svg)](https://zenodo.org/badge/latestdoi/533303423)
 
-This repository contains the replication package and dataset of the paper published at EASE 2023 (Research track) with the title **On the Energy Consumption and Performance of WebAssembly Binaries across Programming Languages and Runtimes in IoT**.
+This repository contains the replication package and dataset of the paper published at EASE 2023 (Research track) with the title [**On the Energy Consumption and Performance of WebAssembly Binaries across Programming Languages and Runtimes in IoT**](https://dl.acm.org/doi/10.1145/3593434.3593454).
 
 This study has been designed, developed, and reported by the following investigators:
 
