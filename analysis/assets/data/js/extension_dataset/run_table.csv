@@ -1,0 +1,61 @@
+__run_id,__done,algorithm,language,runtime,id,energy_usage,execution_time,memory_usage,cpu_usage,storage
+run_54,DONE,nbody,javascript,wasmtime,4,12430.684,6492100,6.398,100.67,1027038
+run_32,DONE,spectral-norm,javascript,wasmtime,2,11904.025,6216750,6.098,100.828,1009163
+run_21,DONE,spectral-norm,javascript,wasmer,1,9326.534,4871800,6.097,100.799,1009163
+run_13,DONE,binarytrees,javascript,wasmtime,3,11091.181,5794540,11.58,100.909,1007394
+run_17,DONE,binarytrees,javascript,wasmtime,7,10914.991,5697280,6.585,99.892,1007394
+run_59,DONE,nbody,javascript,wasmtime,9,12431.828,6487230,1.3,99.828,1027038
+run_30,DONE,spectral-norm,javascript,wasmtime,0,11892.488,6206090,1.4,99.904,1009163
+run_56,DONE,nbody,javascript,wasmtime,6,12421.319,6482970,1.3,99.869,1027038
+run_25,DONE,spectral-norm,javascript,wasmer,5,9315.804,4861520,1.9,99.953,1009163
+run_22,DONE,spectral-norm,javascript,wasmer,2,9293.33,4850380,1.9,99.854,1009163
+run_35,DONE,spectral-norm,javascript,wasmtime,5,11887.922,6202880,1.4,99.891,1009163
+run_38,DONE,spectral-norm,javascript,wasmtime,8,11888.735,6204640,1.4,99.926,1009163
+run_4,DONE,binarytrees,javascript,wasmer,4,8985.135,4693910,11.079,100.979,1007394
+run_48,DONE,nbody,javascript,wasmer,8,9481.859,4953010,5.698,100.789,1027038
+run_28,DONE,spectral-norm,javascript,wasmer,8,9313.445,4860510,1.9,99.911,1009163
+run_55,DONE,nbody,javascript,wasmtime,5,12420.559,6481740,1.3,99.854,1027038
+run_18,DONE,binarytrees,javascript,wasmtime,8,10910.871,5695290,6.585,99.842,1007394
+run_0,DONE,binarytrees,javascript,wasmer,0,8963.928,4678980,7.085,99.887,1007394
+run_3,DONE,binarytrees,javascript,wasmer,3,8966.624,4680640,7.085,99.884,1007394
+run_14,DONE,binarytrees,javascript,wasmtime,4,10911.441,5696020,6.585,99.907,1007394
+run_2,DONE,binarytrees,javascript,wasmer,2,8960.817,4677070,7.085,99.937,1007394
+run_20,DONE,spectral-norm,javascript,wasmer,0,9313.768,4860080,1.9,99.826,1009163
+run_43,DONE,nbody,javascript,wasmer,3,9472.054,4942500,1.8,99.902,1027038
+run_11,DONE,binarytrees,javascript,wasmtime,1,10920.651,5700360,6.585,99.819,1007394
+run_53,DONE,nbody,javascript,wasmtime,3,12406.98,6474600,1.3,99.828,1027038
+run_31,DONE,spectral-norm,javascript,wasmtime,1,11887.726,6203930,1.4,99.913,1009163
+run_57,DONE,nbody,javascript,wasmtime,7,12610.746,6581480,1.3,99.886,1027038
+run_27,DONE,spectral-norm,javascript,wasmer,7,9307.665,4858780,1.9,99.891,1009163
+run_51,DONE,nbody,javascript,wasmtime,1,12408.377,6476670,1.3,99.902,1027038
+run_29,DONE,spectral-norm,javascript,wasmer,9,9312.387,4858930,1.9,99.87,1009163
+run_41,DONE,nbody,javascript,wasmer,1,9469.398,4941480,1.8,99.827,1027038
+run_8,DONE,binarytrees,javascript,wasmer,8,8971.296,4682630,7.085,99.958,1007394
+run_52,DONE,nbody,javascript,wasmtime,2,12424.43,6482610,1.3,99.906,1027038
+run_47,DONE,nbody,javascript,wasmer,7,9455.346,4938340,1.8,99.913,1027038
+run_12,TODO,binarytrees,javascript,wasmtime,2, , , , , 
+run_34,TODO,spectral-norm,javascript,wasmtime,4, , , , , 
+run_44,TODO,nbody,javascript,wasmer,4, , , , , 
+run_33,TODO,spectral-norm,javascript,wasmtime,3, , , , , 
+run_36,TODO,spectral-norm,javascript,wasmtime,6, , , , , 
+run_5,TODO,binarytrees,javascript,wasmer,5, , , , , 
+run_16,TODO,binarytrees,javascript,wasmtime,6, , , , , 
+run_49,TODO,nbody,javascript,wasmer,9, , , , , 
+run_15,TODO,binarytrees,javascript,wasmtime,5, , , , , 
+run_37,TODO,spectral-norm,javascript,wasmtime,7, , , , , 
+run_46,TODO,nbody,javascript,wasmer,6, , , , , 
+run_1,TODO,binarytrees,javascript,wasmer,1, , , , , 
+run_23,TODO,spectral-norm,javascript,wasmer,3, , , , , 
+run_9,TODO,binarytrees,javascript,wasmer,9, , , , , 
+run_40,TODO,nbody,javascript,wasmer,0, , , , , 
+run_50,TODO,nbody,javascript,wasmtime,0, , , , , 
+run_42,TODO,nbody,javascript,wasmer,2, , , , , 
+run_39,TODO,spectral-norm,javascript,wasmtime,9, , , , , 
+run_19,TODO,binarytrees,javascript,wasmtime,9, , , , , 
+run_6,TODO,binarytrees,javascript,wasmer,6, , , , , 
+run_24,TODO,spectral-norm,javascript,wasmer,4, , , , , 
+run_45,TODO,nbody,javascript,wasmer,5, , , , , 
+run_7,TODO,binarytrees,javascript,wasmer,7, , , , , 
+run_10,TODO,binarytrees,javascript,wasmtime,0, , , , , 
+run_26,TODO,spectral-norm,javascript,wasmer,6, , , , , 
+run_58,TODO,nbody,javascript,wasmtime,8, , , , , 

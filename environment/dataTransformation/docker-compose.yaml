@@ -1,0 +1,8 @@
+services:
+  change-data:
+    build: .
+    container_name: greenlab-change-data
+    volumes:
+      - ../../analysis/assets/data:/var/changeData
+    working_dir: /var/changeData
+
